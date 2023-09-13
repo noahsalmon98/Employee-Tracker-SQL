@@ -76,14 +76,14 @@ function menuOptions() {
 
 
 function viewDepartment() {
-    db.query('SELECT * FROM department', (err, result) => {
+    db.query('SELECT * FROM department', (error, result) => {
         console.table(result);
         menuOptions();
     });
 }
 
 function viewRoles () {
-    db.query('SELECT * FROM roles', (err, res) => {
+    db.query('SELECT * FROM roles', (error, result) => {
         console.table(result)
         menuOptions()
     });
@@ -91,7 +91,7 @@ function viewRoles () {
 };
 
 function viewEmployees () {
-    db.query('SELECT * FROM employees', (err, res) => {
+    db.query('SELECT * FROM employees', (error, result) => {
         console.table(result)
         menuOptions()
     });
@@ -111,7 +111,7 @@ function addDepartment() {
     }
     prompt(add_department)
         .then((response) => {
-            db.query(`INSERT INTO department (department_name) VALUES ('${response.name}');`, (err, result) => {
+            db.query(`INSERT INTO department (department_name) VALUES ('${response.name}');`, (error, result) => {
                 console.log('Successfully added department!');
                 menuOptions();
             })
@@ -173,4 +173,41 @@ function addRole() {
                 });
             });
        });
+    }
+
+    function addEmployee() {
+        let roles = [];
+        db.query('SELECT title FROM role;', (error, result) => {
+            result.forEach(element => roles.push(element.title));
+            db.query('SELECT first_name,last_name FROM employee', (error2, result2) => {
+    
+                const add_employee = [{
+                    type: 'input',
+                    message: 'What is the employees first name?',
+                    name: 'firstName'
+                }, {
+                    type: 'input',
+                    message: 'What is the employees last name?',
+                    name: 'lastName'
+                },
+                {
+                    type: 'list',
+                    message: 'What is employees role at the company?',
+                    name: 'role',
+                    choices: roles
+                }];
+    
+                prompt(add_employee)
+                    .then((response) => {
+    
+                        const roleId = roles.indexOf(response.role) + 1;
+    
+                        db.query(`INSERT INTO employee (first_name,last_name,role_id) VALUES ('${response.firstName}','${response.lastName}',${roleId}`, (error3, result3) => {
+                            console.log('Successfully added employee!');
+                            menuOptions()})
+                    })
+    
+            })
+    
+        })
     }
