@@ -117,4 +117,60 @@ function addDepartment() {
             })
         })
     }
-    
+
+function addRole() {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT * FROM department', (error, results) => {
+            if (error) {
+                connection.release();
+                reject(error);
+                return;
+            }
+        
+            const departmentChoices = results.map((department) => ({
+                name: department.name,
+                value: department.id,
+            }));
+        
+            inquirer
+                .prompt([
+                {
+                    type: 'input',
+                    name: 'title',
+                    message: 'Enter the role title:',
+                },
+                {
+                    type: 'input',
+                    name: 'salary',
+                    message: 'Enter the role salary:',
+                },
+                {
+                    type: 'list',
+                    name: 'newDepartment',
+                    message: 'Select the department:',
+                    choices: departmentChoices,
+                },
+                ])
+                .then((answers) => {
+                connection.query(
+                    'INSERT INTO role SET ?',
+                    {
+                    title: answers.title,
+                    salary: answers.salary,
+                    department_id: answers.newDepartment,
+                    },
+                    (error) => {
+                    connection.release();
+        
+                    if (error) {
+                        reject(error);
+                    } else {
+                        console.log('Role added successfully!');
+                        resolve();
+                    }
+                    }
+                );
+                });
+            });
+       });
+    }
