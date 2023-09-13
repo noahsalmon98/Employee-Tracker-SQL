@@ -66,3 +66,18 @@ function menuOptions() {
 
 //TO DO
   //functions for each case
+        //view all departments
+        //view all roles
+        //view all employees
+        //add a department
+        //add a role
+        //add an employee
+        //exit
+
+
+function viewDepartment() {
+    db.query('SELECT * FROM department', (err, result) => {
+        console.table(result);
+        mainMenu();
+    });
+}
