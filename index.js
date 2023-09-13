@@ -72,7 +72,7 @@ function menuOptions() {
         //add a department
         //add a role
         //add an employee
-        //exit
+        
 
 
 function viewDepartment() {
@@ -97,3 +97,24 @@ function viewEmployees () {
     });
      
 };
+
+//TO DO
+    //add department
+    //add role
+    //add employee
+
+function addDepartment() {
+    const add_department = {
+        type: 'input',
+        message: 'What is the name of the Department?',
+        name: 'name'
+    }
+    prompt(add_department)
+        .then((response) => {
+            db.query(`INSERT INTO department (department_name) VALUES ('${response.name}');`, (err, result) => {
+                console.log('Successfully added department!');
+                menuOptions();
+            })
+        })
+    }
+    
