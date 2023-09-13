@@ -82,7 +82,7 @@ function viewDepartment() {
     });
 }
 
-const viewRoles = () => {
+function viewRoles () {
     db.query('SELECT * FROM roles', (err, res) => {
         console.table(result)
         menuOptions()
@@ -90,7 +90,7 @@ const viewRoles = () => {
    
 };
 
-const viewEmployees =() => {
+function viewEmployees () {
     db.query('SELECT * FROM employees', (err, res) => {
         console.table(result)
         menuOptions()
