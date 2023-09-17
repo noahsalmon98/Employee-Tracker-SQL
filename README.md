@@ -42,3 +42,5 @@ I had help from stack overflow and chatgpt
 
 
 ## URL
+
+https://github.com/noahsalmon98/Employee-Tracker-SQL
